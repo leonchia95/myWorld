@@ -1,4 +1,3 @@
-
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -11,6 +10,11 @@ header {
     color: white;
     text-align: center;
     padding: 20px 0;
+}
+
+header .logo {
+    width: 100px; /* Adjust the size of the logo */
+    margin-bottom: 10px;
 }
 
 header h1 {
