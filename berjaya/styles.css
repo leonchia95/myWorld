@@ -1,0 +1,74 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #2a3d66;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 36px;
+}
+
+header p {
+    font-size: 18px;
+}
+
+.main-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.service {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    width: 30%;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.service:hover {
+    transform: scale(1.05);
+}
+
+.service h3 {
+    color: #2a3d66;
+    font-size: 24px;
+}
+
+.service p {
+    font-size: 16px;
+}
+
+.contact {
+    background-color: #2a3d66;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.contact p {
+    font-size: 20px;
+    margin: 5px 0;
+}
+
+footer {
+    background-color: #2a3d66;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
+}
