@@ -9,12 +9,11 @@ header {
     background-color: #2a3d66;
     color: white;
     text-align: center;
-    padding: 20px 0;
-}
-
-header .logo {
-    width: 100px; /* Adjust the size of the logo */
-    margin-bottom: 10px;
+    padding: 100px 0; /* Adjust padding to make space for the background logo */
+    background-image: url('berjaya_logo.png'); /* Set your logo as the background image */
+    background-size: 50%; /* Adjust this value to make the logo bigger or smaller */
+    background-repeat: no-repeat; /* Ensures the logo is not repeated */
+    background-position: center; /* Centers the logo */
 }
 
 header h1 {
