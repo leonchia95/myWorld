@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -48,6 +49,19 @@
             <p>总收入: RM <span id="totalIncome">0</span></p>
             <p>总支出: RM <span id="totalExpense">0</span></p>
             <p>总利润: RM <span id="totalProfit">0</span></p>
+        </section>
+
+        <section class="download-section">
+            <button id="downloadBtn" disabled>下载记录</button>
+        </section>
+
+        <section class="upload-section">
+            <h2>上传记录</h2>
+            <input type="file" id="fileUpload" accept=".csv">
+        </section>
+
+        <section class="clear-section">
+            <button id="clearAllBtn">清除所有记录</button>
         </section>
     </div>
 
