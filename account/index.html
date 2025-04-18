@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>财务计算工具</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Your custom CSS here */
+    </style>
 </head>
 <body>
     <div class="container">
@@ -16,21 +19,7 @@
             <form id="calculatorForm">
                 <div class="input-group">
                     <label for="month">月份:</label>
-                    <select id="month" required>
-                        <option value="">请选择月份</option>
-                        <option value="January">一月</option>
-                        <option value="February">二月</option>
-                        <option value="March">三月</option>
-                        <option value="April">四月</option>
-                        <option value="May">五月</option>
-                        <option value="June">六月</option>
-                        <option value="July">七月</option>
-                        <option value="August">八月</option>
-                        <option value="September">九月</option>
-                        <option value="October">十月</option>
-                        <option value="November">十一月</option>
-                        <option value="December">十二月</option>
-                    </select>
+                    <input type="month" id="month" required>
 
                     <label for="income">收入 (RM):</label>
                     <input type="number" id="income" step="0.01" required>
