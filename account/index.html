@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -6,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>财务计算工具</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Your custom CSS here */
+    </style>
 </head>
 <body>
     <div class="container">
@@ -16,6 +18,9 @@
         <section class="form-section">
             <form id="calculatorForm">
                 <div class="input-group">
+                    <label for="month">月份:</label>
+                    <input type="month" id="month" required>
+
                     <label for="income">收入 (RM):</label>
                     <input type="number" id="income" step="0.01" required>
 
@@ -32,6 +37,7 @@
             <table id="recordTable">
                 <thead>
                     <tr>
+                        <th>月份</th>
                         <th>收入 (RM)</th>
                         <th>支出 (RM)</th>
                         <th>利润 (RM)</th>

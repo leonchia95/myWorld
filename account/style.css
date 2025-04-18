@@ -1,93 +1,77 @@
-
-/* Global Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f4f7;
-    color: #333;
-    line-height: 1.6;
-}
-
+/* General Container Styles */
 .container {
+    font-family: Arial, sans-serif;
     max-width: 900px;
-    margin: 40px auto;
-    background-color: #fff;
-    padding: 30px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f4f7fb;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    animation: fadeIn 1s ease-out;
 }
 
+/* Header */
 header h1 {
     text-align: center;
-    font-size: 32px;
-    color: #2C3E50;
-    margin-bottom: 30px;
+    color: #333;
 }
 
-/* Section Styles */
-section {
-    margin-bottom: 30px;
+/* Form Section */
+.form-section {
+    margin-top: 20px;
 }
 
-h2 {
-    font-size: 24px;
-    color: #34495E;
-    margin-bottom: 15px;
-}
-
-/* Form Styles */
 .input-group {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
+    max-width: 400px;
+    margin: 0 auto;
 }
 
-input[type="number"] {
-    padding: 12px;
-    font-size: 16px;
-    border: 2px solid #ddd;
+/* Labels */
+label {
+    font-size: 14px;
+    color: #444;
+    font-weight: bold;
+}
+
+/* Input Fields */
+input[type="number"], input[type="month"] {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
     border-radius: 4px;
+    outline: none;
     width: 100%;
     box-sizing: border-box;
-    background-color: #f9f9f9;
-    transition: all 0.3s ease;
 }
 
-input[type="number"]:focus {
-    border-color: #3498db;
-    outline: none;
-    background-color: #ffffff;
-    box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+/* Input Fields Focus */
+input[type="number"]:focus, input[type="month"]:focus {
+    border-color: #0056b3;
 }
 
+/* Submit Button */
 button {
-    padding: 12px 24px;
-    font-size: 16px;
-    background-color: #3498db;
+    background-color: #4CAF50;
     color: white;
+    padding: 10px;
+    font-size: 16px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     width: 100%;
-    box-sizing: border-box;
 }
 
 button:hover {
-    background-color: #2980b9;
+    background-color: #45a049;
 }
 
-button:focus {
-    outline: none;
+/* Table Section */
+.record-section {
+    margin-top: 40px;
 }
 
-/* Table Styles */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -95,155 +79,54 @@ table {
 }
 
 th, td {
-    padding: 15px;
+    padding: 10px;
     text-align: center;
-    border-bottom: 1px solid #ddd;
-    transition: all 0.3s ease;
+    border: 1px solid #ddd;
 }
 
 th {
-    background-color: #f4f6f9;
-    color: #2C3E50;
-    font-size: 16px;
-    position: sticky;
-    top: 0;
-    z-index: 1;
+    background-color: #f2f2f2;
 }
 
-td {
-    font-size: 14px;
-}
-
-tr:hover {
-    background-color: #ecf0f1;
-}
-
-.deleteBtn {
-    background-color: #e74c3c;
-    color: white;
-    padding: 6px 12px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.deleteBtn:hover {
-    background-color: #c0392b;
-}
-
-/* Result Section Styles */
-.result-section p {
-    font-size: 18px;
-    margin: 5px 0;
-    color: #2C3E50;
+/* Total Section */
+.result-section {
+    margin-top: 40px;
+    padding: 15px;
+    background-color: #e9f7fb;
+    border-radius: 8px;
+    text-align: center;
 }
 
 /* Download Section */
 .download-section {
-    text-align: center;
     margin-top: 20px;
+    text-align: center;
 }
 
-#downloadBtn {
-    background-color: #27ae60;
-    padding: 12px 24px;
-    font-size: 16px;
-    border-radius: 4px;
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-#downloadBtn:hover {
-    background-color: #2ecc71;
-}
-
-/* Upload Section */
-.upload-section input[type="file"] {
-    padding: 12px;
-    font-size: 16px;
-    border: 2px solid #ddd;
-    border-radius: 4px;
-    width: 100%;
-    background-color: #f9f9f9;
-    margin-top: 15px;
-    transition: all 0.3s ease;
-}
-
-.upload-section input[type="file"]:focus {
-    border-color: #3498db;
-    outline: none;
-    background-color: #ffffff;
-}
-
-/* Clear Section */
+/* Clear All Button */
 .clear-section {
-    text-align: center;
     margin-top: 20px;
-}
-
-/* Success and Error Messages */
-.success, .error {
-    padding: 12px;
-    color: #fff;
-    font-size: 16px;
-    border-radius: 4px;
-    margin-top: 15px;
-    display: none;
     text-align: center;
 }
 
-.success {
-    background-color: #27ae60; /* Green for success */
-}
-
-.error {
-    background-color: #e74c3c; /* Red for error */
-}
-
-/* Loading Message */
-.loading {
-    padding: 12px;
-    color: #fff;
-    background-color: #f39c12; /* Orange for loading */
+button#clearAllBtn {
+    background-color: #f44336;
+    color: white;
+    padding: 10px;
     font-size: 16px;
+    border: none;
     border-radius: 4px;
-    margin-top: 15px;
-    display: none;
-    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
 }
 
-/* Animation for Fade-in */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+button#clearAllBtn:hover {
+    background-color: #d32f2f;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .container {
-        padding: 20px;
-    }
-
-    header h1 {
-        font-size: 28px;
-    }
-
-    .input-group {
-        flex-direction: column;
-    }
-
-    input[type="number"], button {
-        width: 100%;
-    }
-
-    table {
-        font-size: 14px;
-    }
+/* File Upload */
+.upload-section input[type="file"] {
+    margin-top: 10px;
+    padding: 5px;
 }
