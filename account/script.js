@@ -20,9 +20,9 @@ document.addEventListener("DOMContentLoaded", function () {
             totalProfit += record.profit;
         });
 
-        totalIncomeElem.textContent = totalIncome.toFixed(2);
-        totalExpenseElem.textContent = totalExpense.toFixed(2);
-        totalProfitElem.textContent = totalProfit.toFixed(2);
+        totalIncomeElem.textContent = totalIncome.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        totalExpenseElem.textContent = totalExpense.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        totalProfitElem.textContent = totalProfit.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
     }
 
     // Function to add a new record to the table
@@ -31,9 +31,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         row.innerHTML = `
             <td>${month}</td>
-            <td>${income.toFixed(2)}</td>
-            <td>${expense.toFixed(2)}</td>
-            <td>${profit.toFixed(2)}</td>
+            <td>${income.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</td>
+            <td>${expense.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</td>
+            <td>${profit.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</td>
             <td><button class="deleteBtn">删除</button></td>
         `;
 
@@ -48,13 +48,22 @@ document.addEventListener("DOMContentLoaded", function () {
         recordTable.appendChild(row);
     }
 
+    // Format the number as money (with thousands separators)
+    function formatMoney(value) {
+        return value.replace(/\D/g, '').replace(/(\d)(?=(\d{3})+\b)/g, '$1,');
+    }
+
     // Handle form submission
     calculatorForm.addEventListener("submit", function (event) {
         event.preventDefault();
 
         const month = document.getElementById("month").value.trim(); // Get the selected month
-        const income = parseFloat(document.getElementById("income").value);
-        const expense = parseFloat(document.getElementById("expense").value);
+        let income = document.getElementById("income").value;
+        let expense = document.getElementById("expense").value;
+
+        // Remove commas and parse as float
+        income = parseFloat(income.replace(/,/g, ''));
+        expense = parseFloat(expense.replace(/,/g, ''));
 
         // Validate inputs
         if (isNaN(income) || isNaN(expense) || income <= 0 || expense <= 0 || !month) {
@@ -92,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let csvContent = "Month, Income (RM), Expense (RM), Profit (RM)\n"; // English headers
 
         records.forEach(record => {
-            csvContent += `${record.month}, ${record.income.toFixed(2)}, ${record.expense.toFixed(2)}, ${record.profit.toFixed(2)}\n`;
+            csvContent += `${record.month}, ${record.income.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}, ${record.expense.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}, ${record.profit.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}\n`;
         });
 
         const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
@@ -123,9 +132,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     const columns = row.split(",");
                     if (columns.length === 4) {  // Updated to check for 4 columns: Month, Income, Expense, Profit
                         const month = columns[0].trim();
-                        const income = parseFloat(columns[1].trim());
-                        const expense = parseFloat(columns[2].trim());
-                        const profit = parseFloat(columns[3].trim());
+                        const income = parseFloat(columns[1].trim().replace(/,/g, ''));
+                        const expense = parseFloat(columns[2].trim().replace(/,/g, ''));
+                        const profit = parseFloat(columns[3].trim().replace(/,/g, ''));
 
                         if (!isNaN(income) && !isNaN(expense) && !isNaN(profit)) {
                             records.push({ month, income, expense, profit });
