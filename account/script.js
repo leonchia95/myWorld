@@ -26,10 +26,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Function to add a new record to the table
-    function addRecord(income, expense, profit) {
+    function addRecord(month, income, expense, profit) {
         const row = document.createElement("tr");
 
         row.innerHTML = `
+            <td>${month}</td>
             <td>${income.toFixed(2)}</td>
             <td>${expense.toFixed(2)}</td>
             <td>${profit.toFixed(2)}</td>
@@ -51,19 +52,20 @@ document.addEventListener("DOMContentLoaded", function () {
     calculatorForm.addEventListener("submit", function (event) {
         event.preventDefault();
 
+        const month = document.getElementById("month").value.trim(); // Get the selected month
         const income = parseFloat(document.getElementById("income").value);
         const expense = parseFloat(document.getElementById("expense").value);
 
         // Validate inputs
-        if (isNaN(income) || isNaN(expense) || income <= 0 || expense <= 0) {
-            alert("请输入有效的收入和支出数额！");
+        if (isNaN(income) || isNaN(expense) || income <= 0 || expense <= 0 || !month) {
+            alert("请输入有效的月份、收入和支出数额！");
             return;
         }
 
         const profit = income - expense;
-        records.push({ income, expense, profit });
+        records.push({ month, income, expense, profit });
 
-        addRecord(income, expense, profit);
+        addRecord(month, income, expense, profit);
         updateTotals();
         toggleDownloadButton(); // Update download button state
 
@@ -80,17 +82,17 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Download the records as CSV in English
+    // Download the records as CSV
     downloadBtn.addEventListener("click", function () {
         if (records.length === 0) {
             showErrorMessage("No records to download!");
             return;
         }
 
-        let csvContent = "Income (RM), Expense (RM), Profit (RM)\n"; // English headers
+        let csvContent = "Month, Income (RM), Expense (RM), Profit (RM)\n"; // English headers
 
         records.forEach(record => {
-            csvContent += `${record.income.toFixed(2)}, ${record.expense.toFixed(2)}, ${record.profit.toFixed(2)}\n`;
+            csvContent += `${record.month}, ${record.income.toFixed(2)}, ${record.expense.toFixed(2)}, ${record.profit.toFixed(2)}\n`;
         });
 
         const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
@@ -108,9 +110,6 @@ document.addEventListener("DOMContentLoaded", function () {
         if (file && file.type === "text/csv") {
             const reader = new FileReader();
 
-            // Show a loading spinner or message while file is being processed
-            showLoadingMessage("Processing file...");
-
             reader.onload = function (e) {
                 const contents = e.target.result;
                 const rows = contents.split("\n");
@@ -122,26 +121,21 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Skip the header row
                 rows.slice(1).forEach(row => {
                     const columns = row.split(",");
-                    if (columns.length === 3) {
-                        const income = parseFloat(columns[0].trim());
-                        const expense = parseFloat(columns[1].trim());
-                        const profit = parseFloat(columns[2].trim());
+                    if (columns.length === 4) {  // Updated to check for 4 columns: Month, Income, Expense, Profit
+                        const month = columns[0].trim();
+                        const income = parseFloat(columns[1].trim());
+                        const expense = parseFloat(columns[2].trim());
+                        const profit = parseFloat(columns[3].trim());
 
                         if (!isNaN(income) && !isNaN(expense) && !isNaN(profit)) {
-                            records.push({ income, expense, profit });
-                            addRecord(income, expense, profit);
+                            records.push({ month, income, expense, profit });
+                            addRecord(month, income, expense, profit);
                         }
                     }
                 });
 
                 updateTotals(); // Update the totals after file load
                 toggleDownloadButton(); // Update download button state
-
-                // Hide the loading message
-                hideLoadingMessage();
-
-                // Show success message after upload
-                showSuccessMessage("Records successfully uploaded!");
             };
 
             reader.readAsText(file);
@@ -150,20 +144,6 @@ document.addEventListener("DOMContentLoaded", function () {
             showErrorMessage("Please upload a valid CSV file!");
         }
     });
-
-    // Show success message after a successful upload
-    function showSuccessMessage(message) {
-        const successMessage = document.createElement("div");
-        successMessage.classList.add("success");
-        successMessage.textContent = message;
-        document.querySelector(".container").appendChild(successMessage);
-        successMessage.style.display = "block";
-
-        // Hide message after 3 seconds
-        setTimeout(() => {
-            successMessage.style.display = "none";
-        }, 3000);
-    }
 
     // Show error message
     function showErrorMessage(message) {
@@ -179,21 +159,18 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 3000);
     }
 
-    // Show loading message
-    function showLoadingMessage(message) {
-        const loadingMessage = document.createElement("div");
-        loadingMessage.classList.add("loading");
-        loadingMessage.textContent = message;
-        document.querySelector(".container").appendChild(loadingMessage);
-        loadingMessage.style.display = "block";
-    }
+    // Show success message after a successful upload
+    function showSuccessMessage(message) {
+        const successMessage = document.createElement("div");
+        successMessage.classList.add("success");
+        successMessage.textContent = message;
+        document.querySelector(".container").appendChild(successMessage);
+        successMessage.style.display = "block";
 
-    // Hide loading message
-    function hideLoadingMessage() {
-        const loadingMessage = document.querySelector(".loading");
-        if (loadingMessage) {
-            loadingMessage.style.display = "none";
-        }
+        // Hide message after 3 seconds
+        setTimeout(() => {
+            successMessage.style.display = "none";
+        }, 3000);
     }
 
     // Clear all records
