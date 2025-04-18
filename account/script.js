@@ -193,25 +193,5 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Initialize download button state
     toggleDownloadButton();
-	// Check for theme preference on page load
-window.addEventListener('DOMContentLoaded', (event) => {
-    const currentTheme = localStorage.getItem('theme');
-    if (currentTheme) {
-        document.documentElement.setAttribute('data-theme', currentTheme);
-    }
-});
-
-// Toggle the theme
-const toggleButton = document.createElement('button');
-toggleButton.classList.add('theme-toggle');
-toggleButton.textContent = '🌙 Light/Dark Mode';
-document.body.appendChild(toggleButton);
-
-toggleButton.addEventListener('click', () => {
-    let theme = document.documentElement.getAttribute('data-theme');
-    theme = theme === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-});
-
+	
 });
