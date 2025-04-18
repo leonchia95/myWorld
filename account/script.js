@@ -30,9 +30,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const row = document.createElement("tr");
 
         row.innerHTML = `
-            <td>${income}</td>
-            <td>${expense}</td>
-            <td>${profit}</td>
+            <td>${income.toFixed(2)}</td>
+            <td>${expense.toFixed(2)}</td>
+            <td>${profit.toFixed(2)}</td>
             <td><button class="deleteBtn">删除</button></td>
         `;
 
@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let csvContent = "Income (RM), Expense (RM), Profit (RM)\n"; // English headers
 
         records.forEach(record => {
-            csvContent += `${record.income}, ${record.expense}, ${record.profit}\n`;
+            csvContent += `${record.income.toFixed(2)}, ${record.expense.toFixed(2)}, ${record.profit.toFixed(2)}\n`;
         });
 
         const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
