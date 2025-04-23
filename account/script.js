@@ -211,6 +211,13 @@ document.addEventListener("DOMContentLoaded", function () {
         showSuccessMessage("All records cleared!");
     });
 
+    // Handle logout
+    logoutBtn.addEventListener("click", function () {
+        localStorage.removeItem('loggedIn');
+        alert("成功登出!");
+        window.location.href = 'login.html'; // Redirect to the login page
+    });
+	
     // Initialize download button state
     toggleDownloadButton();
 });
