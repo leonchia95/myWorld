@@ -118,55 +118,61 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 
     // Handle file upload
-    fileUpload.addEventListener("change", function (event) {
-        const file = event.target.files[0];
+	fileUpload.addEventListener("change", function (event) {
+		const file = event.target.files[0];
 
-        if (file && file.type === "text/csv") {
-            const reader = new FileReader();
+		if (file && file.type === "text/csv") {
+			const reader = new FileReader();
 
-            reader.onload = function (e) {
-                const contents = e.target.result;
-                const rows = contents.split("\n");
+			reader.onload = function (e) {
+				const contents = e.target.result;
 
-                // Clear previous records
-                records = [];
-                recordTable.innerHTML = "";  // Clear the table
+				// Directly process rows without splitting them
+				const rows = contents.split(/\r?\n/); // Use regex for compatibility across different OS (handles both \n and \r\n)
 
-                // Skip the header row
-                rows.slice(1).forEach((row, index) => {
-                    const columns = row.split(",");
-                    if (columns.length === 4) {  // Check for 4 columns
-                        const month = columns[0].trim();
-                        const income = parseFloat(columns[1].trim().replace(/,/g, ''));
-                        const expense = parseFloat(columns[2].trim().replace(/,/g, ''));
-                        const profit = parseFloat(columns[3].trim().replace(/,/g, ''));
+				// Clear previous records
+				records = [];
+				recordTable.innerHTML = "";  // Clear the table
 
-                        // Validate data
-                        if (!month || isNaN(income) || isNaN(expense) || isNaN(profit)) {
-                            showErrorMessage(`Row ${index + 1} contains invalid data. Skipping row.`);
-                            return;  // Skip this row if data is invalid
-                        }
+				// Skip the header row
+				rows.slice(1).forEach((row, index) => {
+					if (row.trim() === '') return;  // Skip empty lines
 
-                        records.push({ month, income, expense, profit });
-                        addRecord(month, income, expense, profit);
-                    } else {
-                        showErrorMessage(`Row ${index + 1} does not have 4 columns. Skipping row.`);
-                    }
-                });
+					const columns = row.split(",").map(column => column.trim()); // Trim whitespace
 
-                updateTotals(); // Update totals after file load
-                toggleDownloadButton(); // Update download button state
-            };
+					if (columns.length === 4) {  // Check for 4 columns
+						const month = columns[0];
+						const income = parseFloat(columns[1].replace(/,/g, ''));
+						const expense = parseFloat(columns[2].replace(/,/g, ''));
+						const profit = parseFloat(columns[3].replace(/,/g, ''));
 
-            reader.onerror = function () {
-                showErrorMessage("There was an error reading the file. Please try again.");
-            };
+						// Validate data
+						if (!month || isNaN(income) || isNaN(expense) || isNaN(profit)) {
+							showErrorMessage(`Row ${index + 1} contains invalid data. Skipping row.`);
+							return;  // Skip this row if data is invalid
+						}
 
-            reader.readAsText(file);
-        } else {
-            showErrorMessage("Please upload a valid CSV file!");
-        }
-    });
+						records.push({ month, income, expense, profit });
+						addRecord(month, income, expense, profit);
+					} else {
+						showErrorMessage(`Row ${index + 1} does not have 4 columns. Skipping row.`);
+					}
+				});
+
+				updateTotals(); // Update totals after file load
+				toggleDownloadButton(); // Update download button state
+				showSuccessMessage("File uploaded successfully!"); // Success message
+			};
+
+			reader.onerror = function () {
+				showErrorMessage("There was an error reading the file. Please try again.");
+			};
+
+			reader.readAsText(file);
+		} else {
+			showErrorMessage("Please upload a valid CSV file!");
+		}
+	});
 
     // Show error message
     function showErrorMessage(message) {
