@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         totalIncomeElem.textContent = totalIncome.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+
         totalExpenseElem.textContent = totalExpense.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         totalProfitElem.textContent = totalProfit.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
     }
@@ -46,11 +47,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         recordTable.appendChild(row);
-    }
-
-    // Format the number as money (with thousands separators)
-    function formatMoney(value) {
-        return value.replace(/\D/g, '').replace(/(\d)(?=(\d{3})+\b)/g, '$1,');
     }
 
     // Handle form submission
@@ -92,25 +88,34 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Download the records as CSV
-    downloadBtn.addEventListener("click", function () {
-        if (records.length === 0) {
-            showErrorMessage("No records to download!");
-            return;
-        }
+	downloadBtn.addEventListener("click", function () {
+		if (records.length === 0) {
+			showErrorMessage("No records to download!");
+			return;
+		}
 
-        let csvContent = "Month, Income (RM), Expense (RM), Profit (RM)\n"; // English headers
+		// CSV Header
+		let csvContent = "Month, Income (RM), Expense (RM), Profit (RM)\n"; // Proper header row
 
-        records.forEach(record => {
-            csvContent += `${record.month}, ${record.income.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}, ${record.expense.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}, ${record.profit.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}\n`;
-        });
+		records.forEach(record => {
+			// Format the numbers without thousands separator
+			const formattedIncome = record.income.toFixed(2);
+			const formattedExpense = record.expense.toFixed(2);
+			const formattedProfit = record.profit.toFixed(2);
 
-        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-        const link = document.createElement("a");
+			// Concatenate the row data
+			csvContent += `${record.month}, ${formattedIncome}, ${formattedExpense}, ${formattedProfit}\n`;
+		});
 
-        link.setAttribute("href", URL.createObjectURL(blob));
-        link.setAttribute("download", "financial_records.csv");
-        link.click();
-    });
+		// Create a Blob object with the CSV content
+		const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+
+		// Create a link to trigger the download
+		const link = document.createElement("a");
+		link.setAttribute("href", URL.createObjectURL(blob));
+		link.setAttribute("download", "financial_records.csv");
+		link.click();
+	});
 
     // Handle file upload
     fileUpload.addEventListener("change", function (event) {
@@ -128,28 +133,37 @@ document.addEventListener("DOMContentLoaded", function () {
                 recordTable.innerHTML = "";  // Clear the table
 
                 // Skip the header row
-                rows.slice(1).forEach(row => {
+                rows.slice(1).forEach((row, index) => {
                     const columns = row.split(",");
-                    if (columns.length === 4) {  // Updated to check for 4 columns: Month, Income, Expense, Profit
+                    if (columns.length === 4) {  // Check for 4 columns
                         const month = columns[0].trim();
                         const income = parseFloat(columns[1].trim().replace(/,/g, ''));
                         const expense = parseFloat(columns[2].trim().replace(/,/g, ''));
                         const profit = parseFloat(columns[3].trim().replace(/,/g, ''));
 
-                        if (!isNaN(income) && !isNaN(expense) && !isNaN(profit)) {
-                            records.push({ month, income, expense, profit });
-                            addRecord(month, income, expense, profit);
+                        // Validate data
+                        if (!month || isNaN(income) || isNaN(expense) || isNaN(profit)) {
+                            showErrorMessage(`Row ${index + 1} contains invalid data. Skipping row.`);
+                            return;  // Skip this row if data is invalid
                         }
+
+                        records.push({ month, income, expense, profit });
+                        addRecord(month, income, expense, profit);
+                    } else {
+                        showErrorMessage(`Row ${index + 1} does not have 4 columns. Skipping row.`);
                     }
                 });
 
-                updateTotals(); // Update the totals after file load
+                updateTotals(); // Update totals after file load
                 toggleDownloadButton(); // Update download button state
+            };
+
+            reader.onerror = function () {
+                showErrorMessage("There was an error reading the file. Please try again.");
             };
 
             reader.readAsText(file);
         } else {
-            // Show error message if the file is not CSV
             showErrorMessage("Please upload a valid CSV file!");
         }
     });
@@ -193,25 +207,4 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Initialize download button state
     toggleDownloadButton();
-	// Check for theme preference on page load
-window.addEventListener('DOMContentLoaded', (event) => {
-    const currentTheme = localStorage.getItem('theme');
-    if (currentTheme) {
-        document.documentElement.setAttribute('data-theme', currentTheme);
-    }
-});
-
-// Toggle the theme
-const toggleButton = document.createElement('button');
-toggleButton.classList.add('theme-toggle');
-toggleButton.textContent = '🌙 Light/Dark Mode';
-document.body.appendChild(toggleButton);
-
-toggleButton.addEventListener('click', () => {
-    let theme = document.documentElement.getAttribute('data-theme');
-    theme = theme === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-});
-
 });
