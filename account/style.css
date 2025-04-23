@@ -1,17 +1,19 @@
 /* General Container Styles */
 .container {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     max-width: 900px;
     margin: 0 auto;
     padding: 20px;
     background-color: #f4f7fb;
     border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Header */
 header h1 {
     text-align: center;
     color: #333;
+    font-size: 2em;
 }
 
 /* Form Section */
@@ -22,8 +24,8 @@ header h1 {
 .input-group {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    max-width: 400px;
+    gap: 20px;
+    max-width: 450px;
     margin: 0 auto;
 }
 
@@ -32,17 +34,19 @@ label {
     font-size: 14px;
     color: #444;
     font-weight: bold;
+    margin-bottom: 5px;
 }
 
 /* Input Fields */
 input[type="number"], input[type="month"] {
-    padding: 10px;
-    font-size: 14px;
+    padding: 12px;
+    font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
     outline: none;
     width: 100%;
     box-sizing: border-box;
+    transition: border-color 0.3s ease;
 }
 
 /* Input Fields Focus */
@@ -54,17 +58,19 @@ input[type="number"]:focus, input[type="month"]:focus {
 button {
     background-color: #4CAF50;
     color: white;
-    padding: 10px;
+    padding: 12px;
     font-size: 16px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
     width: 100%;
+    margin-top: 10px;
 }
 
 button:hover {
     background-color: #45a049;
+    transform: translateY(-2px);
 }
 
 /* Table Section */
@@ -79,22 +85,24 @@ table {
 }
 
 th, td {
-    padding: 10px;
+    padding: 12px;
     text-align: center;
     border: 1px solid #ddd;
 }
 
 th {
     background-color: #f2f2f2;
+    font-weight: bold;
 }
 
 /* Total Section */
 .result-section {
     margin-top: 40px;
-    padding: 15px;
+    padding: 20px;
     background-color: #e9f7fb;
     border-radius: 8px;
     text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 /* Download Section */
@@ -112,21 +120,40 @@ th {
 button#clearAllBtn {
     background-color: #f44336;
     color: white;
-    padding: 10px;
+    padding: 12px;
     font-size: 16px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
     width: 100%;
 }
 
 button#clearAllBtn:hover {
     background-color: #d32f2f;
+    transform: translateY(-2px);
 }
 
 /* File Upload */
 .upload-section input[type="file"] {
     margin-top: 10px;
     padding: 5px;
+    font-size: 14px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .input-group {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+
+    button {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    table {
+        font-size: 14px;
+    }
 }
