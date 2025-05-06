@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habit Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Habit Tracker</h1>
+
+        <!-- Dropdown to select predefined habits or input a custom habit -->
+        <div class="add-habit">
+            <h2>Select or Add a Habit</h2>
+            <select id="habitSelect">
+                <option value="">--Select a Habit--</option>
+                <option value="book">Read Book</option>
+                <option value="gym">Go to Gym</option>
+                <option value="meditate">Meditate</option>
+                <option value="drink-water">Drink Water</option>
+                <option value="sleep">Sleep Early</option>
+            </select>
+            <input type="text" id="customHabit" placeholder="Or add a custom habit" />
+            <button onclick="addHabit()">Add Habit</button>
+        </div>
+
+        <!-- Displaying added habits -->
+        <div id="habitList" class="habit-list"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

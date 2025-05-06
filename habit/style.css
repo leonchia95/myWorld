@@ -1,0 +1,163 @@
+/* Reset default styles for better consistency */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f6f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+    padding: 20px;
+}
+
+/* Container for the tracker */
+.container {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Main title */
+h1 {
+    font-size: 24px;
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+
+/* Habit selection form */
+.add-habit {
+    margin-bottom: 30px;
+}
+
+/* Dropdown and input fields */
+select, input {
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin: 10px 0;
+    width: calc(100% - 24px); /* Ensure input field is full-width */
+    transition: border 0.3s ease;
+}
+
+/* Focus effect for inputs */
+select:focus, input:focus {
+    border: 1px solid #4CAF50;
+    outline: none;
+}
+
+/* Button styling */
+button {
+    padding: 12px 20px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+/* Button hover effect */
+button:hover {
+    background-color: #45a049;
+}
+
+/* Habit list styling */
+.habit-list {
+    width: 100%;
+}
+
+/* Individual habit card styling */
+.habit-card {
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.habit-card h2 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.habit-card p {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Check-in button inside habit card */
+.checkInBtn {
+    padding: 10px 18px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 15px;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for check-in button */
+.checkInBtn:hover {
+    background-color: #45a049;
+}
+
+/* Total check-in count */
+.check-in-count {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+/* History list styling */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: #f0f0f0;
+    margin: 5px 0;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #333;
+}
+
+li + li {
+    margin-top: 8px;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    select, input, button {
+        width: 100%;
+    }
+}
